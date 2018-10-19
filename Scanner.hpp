@@ -10,12 +10,13 @@ using namespace std;
 
 #include "Parser.hpp"
 
-// 前方参照 (Scanner <-> ParseDriver の相互参照解決）
+// Forward declarations (Scanner <-> ParseDriver）
 class Scanner;
 #include "ParseDriver.hpp"
 
-// yylex()の関数定義冒頭の挿げ替え
-// ソース上に現れる実際の宣言はファイル末尾。実装はScanner.cpp内に生成されたYY_DECLで，YY_DECLはScanner.cpp内で↓の定義をincludeした時に定義され，本来のYY_DECLの定義は#ifndef YY_DECLによってスルーされる
+// replace the declaration of yylex() by #undef & #(re)define
+// following definition will be appear at the end of "Scanner.cpp" that will be created by  flex
+// the original YY_DECL is undefined, and redefined by following declaration that has a new parameter 'ParserDriver& driver' at the 3rd position. this makes it possible to handle my original APIs(drowing pictures, playing sounds...) in ParserDriver in parsing phase.
 #undef YY_DECL
 #define YY_DECL \
 yy::Parser::token_type \

@@ -37,10 +37,9 @@
 %printer	{ debug_stream() << $$; } "number"
 
 %{
-#include "ParseDriver.hpp"			// 忘れがち！！！！！！！！！！！！！！！！！！！！！！
-
+#include "ParseDriver.hpp"			// not to forget to include it here
 // new yylex() function for Parser
-// #define YY_DECL \なんちゃらかんちゃらと紛らわしい
+// confusing..., it's not same as '#define YY_DECL'
 yy::Parser::token_type
 yylex(yy::Parser::semantic_type* yylval,
 	  yy::Parser::location_type* yylloc,
@@ -49,8 +48,8 @@ yylex(yy::Parser::semantic_type* yylval,
 }
 
 // bison's spec: it's our duty to implement error routine
-// ParseDriver::error()もあり，紛らわしい。←は第1引数がyy::location&型。
-// で結局それを呼んでる↓自動でキャストしてくれるのか？
+// it's confusing.., function below is not the same function ParseDriver::error() <- 's 1st param type is yy::location!
+// however below calls the ParserDriver::error() at last internally.. will the yy::Parser::location_type be converted to yy:location ?
 void
 yy::Parser::error(const yy::Parser::location_type& l,
 				  const std::string& m) {

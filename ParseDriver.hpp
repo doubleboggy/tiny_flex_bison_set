@@ -14,7 +14,7 @@ public:
 	bool trace_scanning;
 	bool trace_parsing;
 
-	Scanner *scanner;	// Scanner <-> ParseDriver の相互参照あり
+	Scanner *scanner;
 
 	ParseDriver();
 	virtual ~ParseDriver();

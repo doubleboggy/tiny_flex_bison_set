@@ -9,7 +9,7 @@
 #undef yywrap
 #define yywrap() 1
 
-// yyterminate()がkyに0を返す。これはintで,yy::Parser::token_typeでないためにコンパイラに怒られる。回避のために#defineで上書きする
+// yyterminate() returns 0. compiler says NO because the 0 is not a value of yy::Parser::token_type. to avoid it, we can redefine yyterminate() to return token::END
 #define yyterminate() return token::END
 
 %}
